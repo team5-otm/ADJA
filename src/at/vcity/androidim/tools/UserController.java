@@ -1,6 +1,6 @@
 package at.vcity.androidim.tools;
 
-import at.vcity.androidim.types.FriendInfo;
+import at.vcity.androidim.types.UserInfo;
 
 /*
  * This class can store friendInfo and check userkey and username combination 
@@ -9,29 +9,29 @@ import at.vcity.androidim.types.FriendInfo;
 public class UserController 
 {
 	
-	private static FriendInfo[] friendsInfo = null;
-	private static FriendInfo[] unapprovedFriendsInfo = null;
-	private static String activeFriend;
+	private static UserInfo[] usersInfo = null;
+	//private static FriendInfo[] unapprovedFriendsInfo = null;
+	private static String activeUser;
 	
-	public static void setFriendsInfo(FriendInfo[] friendInfo)
+	public static void setFriendsInfo(UserInfo[] userInfo)
 	{
-		UserController.friendsInfo = friendInfo;
+		UserController.usersInfo = userInfo;
 	}
 	
 	
 	
-	public static FriendInfo checkFriend(String username, String userKey)
+	public static UserInfo checkUser(String username, String userKey)
 	{
-		FriendInfo result = null;
-		if (friendsInfo != null) 
+		UserInfo result = null;
+		if (usersInfo != null) 
 		{
-			for (int i = 0; i < friendsInfo.length; i++) 
+			for (int i = 0; i < usersInfo.length; i++) 
 			{
-				if ( friendsInfo[i].userName.equals(username) && 
-					 friendsInfo[i].userKey.equals(userKey)
+				if ( usersInfo[i].userName.equals(username) && 
+						usersInfo[i].userKey.equals(userKey)
 					)
 				{
-					result = friendsInfo[i];
+					result = usersInfo[i];
 					break;
 				}				
 			}			
@@ -39,27 +39,27 @@ public class UserController
 		return result;
 	}
 	
-	public static void setActiveFriend(String friendName){
-		activeFriend = friendName;
+	public static void setActiveFriend(String userName){
+		activeUser = userName;
 	}
 	
-	public static String getActiveFriend()
+	public static String getActiveUser()
 	{
-		return activeFriend;
+		return activeUser;
 	}
 
 
 
-	public static FriendInfo getFriendInfo(String username) 
+	public static UserInfo getUserInfo(String username) 
 	{
-		FriendInfo result = null;
-		if (friendsInfo != null) 
+		UserInfo result = null;
+		if (usersInfo != null) 
 		{
-			for (int i = 0; i < friendsInfo.length; i++) 
+			for (int i = 0; i < usersInfo.length; i++) 
 			{
-				if ( friendsInfo[i].userName.equals(username) )
+				if ( usersInfo[i].userName.equals(username) )
 				{
-					result = friendsInfo[i];
+					result = usersInfo[i];
 					break;
 				}				
 			}			
@@ -69,22 +69,22 @@ public class UserController
 
 
 
-	public static void setUnapprovedFriendsInfo(FriendInfo[] unapprovedFriends) {
-		unapprovedFriendsInfo = unapprovedFriends;		
+//	public static void setUnapprovedFriendsInfo(FriendInfo[] unapprovedFriends) {
+//		unapprovedFriendsInfo = unapprovedFriends;		
+//	}
+
+
+
+	public static UserInfo[] getUsersInfo() {
+		return usersInfo;
 	}
 
 
-
-	public static FriendInfo[] getFriendsInfo() {
-		return friendsInfo;
-	}
-
-
-
-	public static FriendInfo[] getUnapprovedFriendsInfo() {
-		return unapprovedFriendsInfo;
-	}
-	
+//
+//	public static FriendInfo[] getUnapprovedFriendsInfo() {
+//		return unapprovedFriendsInfo;
+//	}
+//	
 	
 	
 

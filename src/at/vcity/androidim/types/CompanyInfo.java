@@ -1,5 +1,9 @@
 package at.vcity.androidim.types;
 
+import android.R;
+
+import com.microsoft.windowsazure.services.blob.client.BlobType;
+
 public class CompanyInfo{
 		
 		//public static final String FRIEND_LIST = "friendList";
@@ -11,7 +15,8 @@ public class CompanyInfo{
 		public static final String COUNTRY = "country";
 		public static final String RC_NUMBER = "rcNumber";  // this should not be in here
 		public static final String STATUS = "status";
-	
+	//	public static final BlobType COMPANY_LOGO = R.drawable.btn_star_big_on;
+		
 		public STATUS status;
 		public String companyName;
 		public String companyEmail;
