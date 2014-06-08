@@ -1,7 +1,21 @@
 package at.vcity.androidim;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+
+import com.microsoft.windowsazure.services.blob.client.CloudBlobClient;
+import com.microsoft.windowsazure.services.blob.client.CloudBlobContainer;
+import com.microsoft.windowsazure.services.blob.client.CloudBlockBlob;
+import com.microsoft.windowsazure.services.core.storage.CloudStorageAccount;
+import com.microsoft.windowsazure.services.core.storage.StorageException;
+
 import at.vcity.androidim.interfaces.IAppManager;
 import at.vcity.androidim.services.IMService;
+import at.vcity.androidim.tools.FilePickerActivity;
 import at.vcity.androidim.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -22,6 +36,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -41,7 +56,10 @@ public class CompanySignUp extends Activity {
 	private static final int SIGN_UP_USERNAME_CRASHED = 3;
 	private static final int SIGN_UP_SUCCESSFULL = 4;
 	protected static final int USERNAME_AND_PASSWORD_LENGTH_SHORT = 5;
-	
+	public static final String storageConnectionString = 
+		    "DefaultEndpointsProtocol=https://portalvhdsyjq0vt429h8h6.blob.core.windows.net/;" + 
+		    "AccountName=portalvhdsyjq0vt429h8h6;" + 
+		    "AccountKey=yvPPu1aK3JmNSdY7V5XOuqw2Xbu+9kbZC9GreEmUC4yDsh85Vqi3hb8wZAU4aWcmd4x+SBGYGf/werhkUD0NDA==";
 	
 //	private static final String SERVER_RES_SIGN_UP_FAILED = "0";
 	private static final String SERVER_RES_RES_SIGN_UP_SUCCESFULL = "1";
@@ -59,6 +77,8 @@ public class CompanySignUp extends Activity {
 	private EditText rc_number;
 	private Button submitSignUp;
 	private Button cancelButton;
+	private ImageView addCompanyLogo;
+	private static final int REQUEST_PICK_FILE = 1;
 	private IAppManager imService;
 	private Handler handler = new Handler();
 	
@@ -128,6 +148,7 @@ public class CompanySignUp extends Activity {
         rc_number = (EditText) findViewById(R.id.rc_number);
         submitSignUp = (Button) findViewById(R.id.submit_button);
         cancelButton = (Button) findViewById(R.id.cancel_button);
+        addCompanyLogo = (ImageView) findViewById(R.id.add_company_logo);
         
         submitSignUp.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) 
@@ -217,6 +238,16 @@ public class CompanySignUp extends Activity {
 			}	        	
         });
         
+        addCompanyLogo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			Intent pick_logo = new Intent(CompanySignUp.this, FilePickerActivity.class);
+			startActivityForResult(pick_logo, REQUEST_PICK_FILE);
+			}
+		});
+        
 // Set up an instance of SystemUiHider to control the system UI for
 		// this activity.
 		mSystemUiHider = SystemUiHider.getInstance(this, contentView,
@@ -279,8 +310,53 @@ public class CompanySignUp extends Activity {
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
+
 	}
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(resultCode==RESULT_OK){
+			switch(requestCode){
+			case REQUEST_PICK_FILE:
+				if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)){
+					final File logo = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
+					Thread uploadtoBlob = new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							try {
+								CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
+								CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
+								CloudBlobContainer container = blobClient.getContainerReference("company-logos");
+								CloudBlockBlob blob = container.getBlockBlobReference(companyEmail.getText().toString());
+								blob.upload(new FileInputStream(logo), logo.length());
+								
+							} catch (InvalidKeyException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (URISyntaxException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}  catch (StorageException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					});
+					uploadtoBlob.start();
+				}
+			}
+		}
+		
+		
+		
+	}
 	protected Dialog onCreateDialog(int id) 
 	{    	
 		  	

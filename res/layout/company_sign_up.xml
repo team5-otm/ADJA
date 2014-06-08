@@ -154,6 +154,16 @@
                 android:hint="enter name of company"
                 android:inputType="textPersonName" />
 
+            <ImageView
+                android:id="@+id/add_company_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/company_name"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/cancel_button"
+                android:src="@android:drawable/dialog_holo_light_frame" 
+                android:clickable="true"/>
+
         </RelativeLayout>
 
     </FrameLayout>

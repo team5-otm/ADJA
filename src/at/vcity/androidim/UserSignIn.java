@@ -142,7 +142,7 @@ public class UserSignIn extends Activity {
 								 */		
 								handler.post(new Runnable(){
 									public void run() {										
-										Intent i = new Intent(UserSignIn.this, FriendList.class);												
+										Intent i = new Intent(UserSignIn.this, UserHomePage.class);												
 										//i.putExtra(FRIEND_LIST, result);						
 										startActivity(i);	
 										UserSignIn.this.finish();
