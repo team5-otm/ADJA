@@ -21,5 +21,24 @@
 			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-core-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-jaxrs-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-mapper-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-xc-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jaxb-impl-2.2.3-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jaxb-impl-2.2.3-1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-client-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-client-1.13-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-core-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-core-1.13-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-json-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-json-1.13-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/mail-1.4.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/mail-1.4.5-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/microsoft-windowsazure-api-0.4.6.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
