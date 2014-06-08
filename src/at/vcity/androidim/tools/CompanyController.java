@@ -82,10 +82,10 @@ public class CompanyController
 
 
 
-	public static FriendInfo[] getUnapprovedFriendsInfo() {
-		return unapprovedFriendsInfo;
-	}
-	
+//	public static FriendInfo[] getUnapprovedFriendsInfo() {
+//		return unapprovedFriendsInfo;
+//	}
+//	
 	
 	
 
