@@ -1,0 +1,161 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context=".CompanySignUp" >
+
+    <!--
+         The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc.
+    -->
+   <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="@string/dummy_content"
+        android:textColor="#33b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+    <!--
+         This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows.
+    -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <Button
+                android:id="@+id/dummy_button"
+                style="?buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/admin_passwordAgain_text"
+                android:layout_marginBottom="55dp"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/cancel_button"
+                android:layout_alignBottom="@+id/cancel_button"
+                android:layout_alignLeft="@+id/rc_number"
+                android:text="Submit" />
+
+            <EditText
+                android:id="@+id/rc_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/cancel_button"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="18dp"
+                android:hint="company registration number"
+                android:ems="10"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/company_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/company_address"
+                android:layout_alignLeft="@+id/company_address"
+                android:ems="10"
+                android:hint="company email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/admin_passwordAgain_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/company_email"
+                android:layout_alignLeft="@+id/city"
+                android:hint="enter password again"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/rc_number"
+                android:layout_alignLeft="@+id/company_address"
+                android:ems="10" 
+                android:hint="country"
+                android:inputType="text">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/company_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/country"
+                android:layout_alignRight="@+id/admin_passwordAgain_text"
+                android:ems="10"
+                android:hint="enter company address"
+                android:inputType="textPostalAddress" />
+
+            <EditText
+                android:id="@+id/admin_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/admin_passwordAgain_text"
+                android:layout_alignLeft="@+id/rc_number"
+                android:ems="10"
+                android:hint="enter password"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/admin_password"
+                android:layout_alignRight="@+id/admin_password"
+                android:hint="enter city"
+                android:ems="10" />
+
+            <EditText
+                android:id="@+id/company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/city"
+                android:layout_alignLeft="@+id/admin_password"
+                android:ems="10"
+                android:hint="enter name of company"
+                android:inputType="textPersonName" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</FrameLayout>

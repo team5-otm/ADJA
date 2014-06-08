@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="at.vcity.androidim"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="at.vcity.androidim.FriendList" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+
+        <service android:name="at.vcity.androidim.services.IMService" >
+        </service>
+
+        <activity android:name="at.vcity.androidim.UserSignIn" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity android:name="at.vcity.androidim.Messaging" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity android:name="at.vcity.androidim.UserSignUp" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity android:name="at.vcity.androidim.AddFriend" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity android:name="at.vcity.androidim.UnApprovedFriendList" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+
+                <category android:name="android.intent.category.NORMAL" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.SplashScreenActivity"
+            android:label="@string/title_activity_splash_screen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.NORMAL" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.SplashScreen"
+            android:label="@string/title_activity_splash_screen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.FrontPage"
+            android:label="@string/title_activity_front_page" >
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.SignUpHomePage"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_sign_up_home_page"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.CompanySignUp"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_company_sign_up"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name="at.vcity.androidim.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+    </application>
+
+</manifest>
