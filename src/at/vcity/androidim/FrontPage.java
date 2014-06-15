@@ -43,7 +43,7 @@ public class FrontPage extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent signUpPage = new Intent(FrontPage.this, UserSignUp.class);
+			Intent signUpPage = new Intent(FrontPage.this, SignUpHomePage.class);
 			startActivity(signUpPage);
 		}
 	} );

@@ -13,11 +13,6 @@ import com.microsoft.windowsazure.services.blob.client.CloudBlockBlob;
 import com.microsoft.windowsazure.services.core.storage.CloudStorageAccount;
 import com.microsoft.windowsazure.services.core.storage.StorageException;
 
-import at.vcity.androidim.interfaces.IAppManager;
-import at.vcity.androidim.services.IMService;
-import at.vcity.androidim.tools.FilePickerActivity;
-import at.vcity.androidim.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,6 +33,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import at.vcity.androidim.interfaces.IAppManager;
+import at.vcity.androidim.services.IMService;
+import at.vcity.androidim.tools.FilePickerActivity;
+import at.vcity.androidim.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -57,9 +56,10 @@ public class CompanySignUp extends Activity {
 	private static final int SIGN_UP_SUCCESSFULL = 4;
 	protected static final int USERNAME_AND_PASSWORD_LENGTH_SHORT = 5;
 	public static final String storageConnectionString = 
-		    "DefaultEndpointsProtocol=https://portalvhdsyjq0vt429h8h6.blob.core.windows.net/;" + 
-		    "AccountName=portalvhdsyjq0vt429h8h6;" + 
-		    "AccountKey=yvPPu1aK3JmNSdY7V5XOuqw2Xbu+9kbZC9GreEmUC4yDsh85Vqi3hb8wZAU4aWcmd4x+SBGYGf/werhkUD0NDA==";
+		    "https;" + 
+		    "portalvhdsyjq0vt429h8h6;" + 
+		    "yvPPu1aK3JmNSdY7V5XOuqw2Xbu+9kbZC9GreEmUC4yDsh85Vqi3hb8wZAU4aWcmd4x+SBGYGf/werhkUD0NDA==";
+	public File logo;
 	
 //	private static final String SERVER_RES_SIGN_UP_FAILED = "0";
 	private static final String SERVER_RES_RES_SIGN_UP_SUCCESFULL = "1";
@@ -168,7 +168,39 @@ public class CompanySignUp extends Activity {
 					
 						if (companyName.length() >= 5 && adminPassword.length() >= 5) {
 						
-								Thread thread = new Thread(){
+//							Thread uploadtoBlob = new Thread(new Runnable() {
+//								
+//								@Override
+//								public void run() {
+//									// TODO Auto-generated method stub
+//									try {
+//										CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
+//										CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
+//										CloudBlobContainer container = blobClient.getContainerReference("company-logos");
+//										CloudBlockBlob blob = container.getBlockBlobReference(companyEmail.getText().toString());
+//										blob.upload(new FileInputStream(logo), logo.length());
+//										
+//									} catch (InvalidKeyException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									} catch (URISyntaxException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									}  catch (StorageException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									} catch (FileNotFoundException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									} catch (IOException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									}
+//								}
+//							});
+//							uploadtoBlob.start();
+//						
+					Thread thread = new Thread(){
 									String result = new String();
 									@Override
 									public void run() {
@@ -318,43 +350,11 @@ public class CompanySignUp extends Activity {
 			switch(requestCode){
 			case REQUEST_PICK_FILE:
 				if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)){
-					final File logo = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
-					Thread uploadtoBlob = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							try {
-								CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
-								CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
-								CloudBlobContainer container = blobClient.getContainerReference("company-logos");
-								CloudBlockBlob blob = container.getBlockBlobReference(companyEmail.getText().toString());
-								blob.upload(new FileInputStream(logo), logo.length());
-								
-							} catch (InvalidKeyException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (URISyntaxException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}  catch (StorageException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					});
-					uploadtoBlob.start();
-				}
-			}
+					logo = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
+					
 		}
 		
-		
+			}}
 		
 	}
 	protected Dialog onCreateDialog(int id) 

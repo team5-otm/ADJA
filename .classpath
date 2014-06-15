@@ -1,44 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="con" path="com.microsoftopentechnologies.windowsazure.tools.SDK_CONTAINER/0.4.6">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Documents/E-books/ANDROID/Google/android-sdk/platforms/android-17/android.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/Users/walexi4great/Documents/E-books/ANDROID/Google/android-sdk/docs/reference"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/walexi4great/Documents/E-books/ANDROID/Google/android-sdk/platforms/android-16/android.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/Users/walexi4great/Documents/E-books/ANDROID/Google/android-sdk/docs/reference"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-core-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-jaxrs-1.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-mapper-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jackson-xc-1.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jaxb-impl-2.2.3-1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jaxb-impl-2.2.3-1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-client-1.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-client-1.13-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-core-1.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-core-1.13-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-json-1.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jersey-json-1.13-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/jettison-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/mail-1.4.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/mail-1.4.5-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/walexi4great/Downloads/PackageForAzureLibrariesForJava/microsoft-windowsazure-api-0.4.6.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -47,12 +47,16 @@ import at.vcity.androidim.communication.SocketOperator;
 import at.vcity.androidim.interfaces.IAppManager;
 import at.vcity.androidim.interfaces.ISocketOperator;
 import at.vcity.androidim.interfaces.IUpdateData;
+import at.vcity.androidim.tools.CompanyController;
 import at.vcity.androidim.tools.FriendController;
 import at.vcity.androidim.tools.LocalStorageHandler;
 import at.vcity.androidim.tools.MessageController;
+import at.vcity.androidim.tools.UserController;
 import at.vcity.androidim.tools.XMLHandler;
+import at.vcity.androidim.types.CompanyInfo;
 import at.vcity.androidim.types.FriendInfo;
 import at.vcity.androidim.types.MessageInfo;
+import at.vcity.androidim.types.StaffInfo;
 
 
 /**
@@ -72,12 +76,18 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	public static String USERNAME;
 	public static final String TAKE_MESSAGE = "Take_Message";
 	public static final String FRIEND_LIST_UPDATED = "Take Friend List";
+	public static final String COMPANY_LIST_UPDATED = "Take Company List";
+	public static final String STAFF_LIST_UPDATED = "Take Staff List";
 	public static final String MESSAGE_LIST_UPDATED = "Take Message List";
 	public ConnectivityManager conManager = null; 
 	private final int UPDATE_TIME_PERIOD = 15000;
 //	private static final INT LISTENING_PORT_NO = 8956;
-	private String rawFriendList = new String();
+//	private String rawFriendList = new String();
+	private String rawCompanyList = new String();
+	private String rawUserList = new String();
 	private String rawMessageList = new String();
+	private String rawStoreList = new String();
+	private String rawStaffList = new String();
 
 	ISocketOperator socketOperator = new SocketOperator(this);
 
@@ -86,6 +96,8 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	private String password;
 	private String message_time;
 	private boolean authenticatedUser = false;
+	private boolean authenticatedCompany = false;
+	private boolean authenticatedStaff = false;
 	 // timer to take the updated data from server
 	private Timer timer;
 	
@@ -180,7 +192,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
     	
 
         Intent i = new Intent(this, Messaging.class);
-        i.putExtra(FriendInfo.USERNAME, username);
+        i.putExtra(CompanyInfo.COMPANY_NAME, username);
         i.putExtra(MessageInfo.MESSAGETEXT, msg);	
         
         // The PendingIntent to launch our activity if the user selects this notification
@@ -228,16 +240,16 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	}
 
 	
-	private String getFriendList() throws UnsupportedEncodingException 	{		
-		// after authentication, server replies with friendList xml
-		
-		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
-		 if (rawFriendList != null) {
-			 this.parseFriendInfo(rawFriendList);
-		 }
-		 return rawFriendList;
-	}
-	
+//	private String getFriendList() throws UnsupportedEncodingException 	{		
+//		// after authentication, server replies with friendList xml
+//		
+//		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+//		 if (rawFriendList != null) {
+//			 this.parseFriendInfo(rawFriendList);
+//		 }
+//		 return rawFriendList;
+//	}
+//	
 	private String getMessageList() throws UnsupportedEncodingException 	{		
 		// after authentication, server replies with friendList xml
 		
@@ -248,6 +260,36 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		 return rawMessageList;
 	}
 	
+	private String getCompanyList() throws UnsupportedEncodingException 	{		
+		// after authentication, server replies with friendList xml
+		
+		 rawCompanyList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		 if (rawCompanyList != null) {
+			 this.parseCompanyInfo(rawCompanyList);
+		 }
+		 return rawCompanyList;
+	}
+	
+	private String getStaffList() throws UnsupportedEncodingException  {
+		// TODO Auto-generated method stub
+		rawStaffList = socketOperator.sendHttpRequest(getAuthenticateCompanyParams(username, password));
+		if (rawStaffList != null){
+			this.parseStaffInfo(rawStaffList);
+		}
+		
+		return rawStaffList;
+	}
+
+	
+	private String getStoreList() throws UnsupportedEncodingException 	{		
+		// after authentication, server replies with friendList xml
+		
+		rawStoreList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		 if (rawStoreList != null) {
+			 this.parseCompanyInfo(rawStoreList);
+		 }
+		 return rawStoreList;
+	}
 	
 
 	/**
@@ -263,15 +305,124 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 		this.authenticatedUser = false;
 		
-		String result = this.getFriendList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		String result = this.getCompanyList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
 		if (result != null && !result.equals(UserSignIn.AUTHENTICATION_FAILED)) 
 		{			
 			// if user is authenticated then return string from server is not equal to AUTHENTICATION_FAILED
 			this.authenticatedUser = true;
-			rawFriendList = result;
+			rawCompanyList = result;
+			USERNAME = this.username;
+			Intent i = new Intent(COMPANY_LIST_UPDATED);					
+			i.putExtra(CompanyInfo.COMPANY_LIST, rawCompanyList);
+			sendBroadcast(i);
+			
+			timer.schedule(new TimerTask()
+			{			
+				public void run() 
+				{
+					try {					
+						//rawFriendList = IMService.this.getFriendList();
+						// sending friend list 
+						Intent i = new Intent(COMPANY_LIST_UPDATED);
+						Intent i2 = new Intent(MESSAGE_LIST_UPDATED);
+						String tmp = IMService.this.getCompanyList();
+						String tmp2 = IMService.this.getMessageList();
+						if (tmp != null) {
+							i.putExtra(CompanyInfo.COMPANY_LIST, tmp);
+							sendBroadcast(i);	
+							Log.i("company list broadcast sent ", "");
+						
+						if (tmp2 != null) {
+							i2.putExtra(MessageInfo.MESSAGE_LIST, tmp2);
+							sendBroadcast(i2);	
+							Log.i("company list broadcast sent ", "");
+						}
+						}
+						else {
+							Log.i("company list returned null", "");
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}					
+				}			
+			}, UPDATE_TIME_PERIOD, UPDATE_TIME_PERIOD);
+		}
+		
+		return result;		
+	}
+
+	public String authenticateCompany(String usernameText, String passwordText) throws UnsupportedEncodingException 
+	{
+		this.username = usernameText;
+		this.password = passwordText;	
+		
+		this.authenticatedCompany = false;
+		
+		String result = this.getStaffList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		if (result != null && !result.equals(UserSignIn.AUTHENTICATION_FAILED)) 
+		{			
+			// if user is authenticated then return string from server is not equal to AUTHENTICATION_FAILED
+			this.authenticatedCompany = true;
+			rawStaffList = result;
+			USERNAME = this.username;
+			Intent i = new Intent(STAFF_LIST_UPDATED);					
+			i.putExtra(StaffInfo.STAFF_LIST, rawStaffList);
+			sendBroadcast(i);
+			
+			timer.schedule(new TimerTask()
+			{			
+				public void run() 
+				{
+					try {					
+						//rawFriendList = IMService.this.getFriendList();
+						// sending friend list 
+						Intent i = new Intent(STAFF_LIST_UPDATED);
+				//		Intent i2 = new Intent(MESSAGE_LIST_UPDATED);
+						String tmp = IMService.this.getStaffList();
+				//		String tmp2 = IMService.this.getMessageList();
+						if (tmp != null) {
+							i.putExtra(FriendInfo.FRIEND_LIST, tmp);
+							sendBroadcast(i);	
+							Log.i("staff list broadcast sent ", "");
+						
+//						if (tmp2 != null) {
+//							i2.putExtra(MessageInfo.MESSAGE_LIST, tmp2);
+//							sendBroadcast(i2);	
+//							Log.i("friend list broadcast sent ", "");
+//						}
+						}
+						else {
+							Log.i("friend list returned null", "");
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}					
+				}			
+			}, UPDATE_TIME_PERIOD, UPDATE_TIME_PERIOD);
+		}
+		
+		return result;		
+	}
+
+	
+	public String authenticateStaff(String usernameText, String passwordText) throws UnsupportedEncodingException 
+	{
+		this.username = usernameText;
+		this.password = passwordText;	
+		
+		this.authenticatedUser = false;
+		
+		String result = this.getUserList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		if (result != null && !result.equals(UserSignIn.AUTHENTICATION_FAILED)) 
+		{			
+			// if user is authenticated then return string from server is not equal to AUTHENTICATION_FAILED
+			this.authenticatedUser = true;
+			rawCompanyList = result;
 			USERNAME = this.username;
 			Intent i = new Intent(FRIEND_LIST_UPDATED);					
-			i.putExtra(FriendInfo.FRIEND_LIST, rawFriendList);
+			i.putExtra(FriendInfo.FRIEND_LIST, rawCompanyList);
 			sendBroadcast(i);
 			
 			timer.schedule(new TimerTask()
@@ -310,7 +461,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		return result;		
 	}
 
-	public void messageReceived(String username, String message, String message_time) 
+public void messageReceived(String username, String message, String message_time) 
 	{				
 		
 		//FriendInfo friend = FriendController.getFriendInfo(username);
@@ -323,7 +474,8 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			i.putExtra(MessageInfo.MESSAGETEXT, msg.messagetext);
 			i.putExtra(MessageInfo.SENDTIME, msg.sendtime);
 			sendBroadcast(i);
-			String activeFriend = FriendController.getActiveFriend();
+			String activeCompany = CompanyController.getActiveCompany();
+			String activeUser = UserController.getActiveUser();
 			if (activeFriend == null || activeFriend.equals(username) == false) 
 			{
 			//	localstoragehandler.insert(username,this.getUsername(), message.toString(), this.getMessage_time());
@@ -346,6 +498,27 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		return params;		
 	}
 
+	private String getAuthenticateStaffParams(String staffnameText, String passwordText) throws UnsupportedEncodingException 
+	{			
+		String params = "username=" + URLEncoder.encode(staffnameText,"UTF-8") +
+						"&password="+ URLEncoder.encode(passwordText,"UTF-8") +
+						"&action="  + URLEncoder.encode("authenticateStaff","UTF-8")+
+						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort()),"UTF-8") +
+						"&";		
+		
+		return params;		
+	}
+	private String getAuthenticateCompanyParams(String companynameText, String passwordText) throws UnsupportedEncodingException 
+	{			
+		String params = "username=" + URLEncoder.encode(companynameText,"UTF-8") +
+						"&password="+ URLEncoder.encode(passwordText,"UTF-8") +
+						"&action="  + URLEncoder.encode("authenticateCompany","UTF-8")+
+						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort()),"UTF-8") +
+						"&";		
+		
+		return params;		
+	}
+	
 	public void setUserKey(String value) 
 	{		
 	}
@@ -358,10 +531,31 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		return authenticatedUser;
 	}
 	
-	public String getLastRawFriendList() {		
-		return this.rawFriendList;
+	public boolean isStaffAuthenticated(){
+		return authenticatedStaff;
 	}
 	
+	public boolean isCompanyAuthenticated(){
+		return authenticatedCompany;
+	}
+	
+//	public String getLastRawFriendList() {		
+//		return this.rawFriendList;
+//	}
+
+	public String getLastRawCompanyList() {		
+		return this.rawCompanyList;
+	}
+
+	public String getLastRawUserList() {		
+		return this.rawUserList;
+	}
+	@Override
+	public String getLastRawStoreList() {
+		// TODO Auto-generated method stub
+		return this.rawStoreList;
+	}
+
 	@Override
 	public void onDestroy() {
 		Log.i("IMService is being destroyed", "...");
@@ -408,37 +602,62 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 		return result;
 	}
-
-	public String addNewFriendRequest(String friendUsername) 
-	{
-		String params = "username=" + this.username +
-		"&password=" + this.password +
-		"&action=" + "addNewFriend" +
-		"&friendUserName=" + friendUsername +
-		"&";
-
-		String result = socketOperator.sendHttpRequest(params);		
-		
-		return result;
+	
+	@Override
+	public String signUpStaff(String companyName, String staffName,
+			String staffPasswordText) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public String sendFriendsReqsResponse(String approvedFriendNames,
-			String discardedFriendNames) 
-	{
-		String params = "username=" + this.username +
-		"&password=" + this.password +
-		"&action=" + "responseOfFriendReqs"+
-		"&approvedFriends=" + approvedFriendNames +
-		"&discardedFriends=" +discardedFriendNames +
-		"&";
+//	public String addNewFriendRequest(String friendUsername) 
+//	{
+//		String params = "username=" + this.username +
+//		"&password=" + this.password +
+//		"&action=" + "addNewFriend" +
+//		"&friendUserName=" + friendUsername +
+//		"&";
+//
+//		String result = socketOperator.sendHttpRequest(params);		
+//		
+//		return result;
+//	}
 
-		String result = socketOperator.sendHttpRequest(params);		
-		
-		return result;
-		
-	} 
+//	public String sendFriendsReqsResponse(String approvedFriendNames,
+//			String discardedFriendNames) 
+//	{
+//		String params = "username=" + this.username +
+//		"&password=" + this.password +
+//		"&action=" + "responseOfFriendReqs"+
+//		"&approvedFriends=" + approvedFriendNames +
+//		"&discardedFriends=" +discardedFriendNames +
+//		"&";
+//
+//		String result = socketOperator.sendHttpRequest(params);		
+//		
+//		return result;
+//		
+//	} 
 	
-	private void parseFriendInfo(String xml)
+//	private void parseFriendInfo(String xml)
+//	{			
+//		try 
+//		{
+//			SAXParser sp = SAXParserFactory.newInstance().newSAXParser();
+//			sp.parse(new ByteArrayInputStream(xml.getBytes()), new XMLHandler(IMService.this));		
+//		} 
+//		catch (ParserConfigurationException e) {			
+//			e.printStackTrace();
+//		}
+//		catch (SAXException e) {			
+//			e.printStackTrace();
+//		} 
+//		catch (IOException e) {			
+//			e.printStackTrace();
+	
+//		}	
+//	}
+	private void parseCompanyInfo(String xml)
 	{			
 		try 
 		{
@@ -455,6 +674,25 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			e.printStackTrace();
 		}	
 	}
+	
+	private void parseStaffInfo(String xml) {
+		// TODO Auto-generated method stub
+		try 
+		{
+			SAXParser sp = SAXParserFactory.newInstance().newSAXParser();
+			sp.parse(new ByteArrayInputStream(xml.getBytes()), new XMLHandler(IMService.this));		
+		} 
+		catch (ParserConfigurationException e) {			
+			e.printStackTrace();
+		}
+		catch (SAXException e) {			
+			e.printStackTrace();
+		} 
+		catch (IOException e) {			
+			e.printStackTrace();
+		}	
+	}
+
 	private void parseMessageInfo(String xml)
 	{			
 		try 
@@ -472,9 +710,31 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			e.printStackTrace();
 		}	
 	}
+	
+	
 
-	public void updateData(MessageInfo[] messages,FriendInfo[] friends,
-			FriendInfo[] unApprovedFriends, String userKey) 
+//	public void updateData(MessageInfo[] messages,FriendInfo[] friends,
+//			FriendInfo[] unApprovedFriends, String userKey) 
+//	{
+//		this.setUserKey(userKey);
+//		//FriendController.	
+//		MessageController.setMessagesInfo(messages);
+//		//Log.i("MESSAGEIMSERVICE","messages.length="+messages.length);
+//		
+//		int i = 0;
+//		while (i < messages.length){
+//			messageReceived(messages[i].userid,messages[i].messagetext, messages[i].sendtime);
+//			//appManager.messageReceived(messages[i].userid,messages[i].messagetext);
+//			i++;
+//		}
+//		
+//		
+//		FriendController.setFriendsInfo(friends);
+//		FriendController.setUnapprovedFriendsInfo(unApprovedFriends);
+//		
+//	}
+	public void updateData(MessageInfo[] messages,CompanyInfo[] companys,
+		String userKey) 
 	{
 		this.setUserKey(userKey);
 		//FriendController.	
@@ -489,11 +749,14 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		}
 		
 		
-		FriendController.setFriendsInfo(friends);
-		FriendController.setUnapprovedFriendsInfo(unApprovedFriends);
+		CompanyController.setCompanysInfo(companys);
 		
 	}
 
+	
+	
+	
+	
 
 	
 	

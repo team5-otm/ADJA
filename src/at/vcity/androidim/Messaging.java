@@ -37,9 +37,11 @@ import at.vcity.androidim.interfaces.IAppManager;
 import at.vcity.androidim.services.IMService;
 import at.vcity.androidim.tools.AwesomeAdapter;
 import at.vcity.androidim.tools.AwesomeAdapter2;
+import at.vcity.androidim.tools.CompanyController;
 import at.vcity.androidim.tools.FriendController;
 import at.vcity.androidim.tools.LocalStorageHandler;
 import at.vcity.androidim.tools.Message;
+import at.vcity.androidim.types.CompanyInfo;
 import at.vcity.androidim.types.FriendInfo;
 import at.vcity.androidim.types.MessageInfo;
 
@@ -54,7 +56,8 @@ public class Messaging extends ListActivity {
 	//private EditText messageHistoryText;
 	private Button sendMessageButton;
 	private IAppManager imService;
-	private FriendInfo friend = new FriendInfo();
+	//private FriendInfo friend = new FriendInfo();
+	private CompanyInfo company = new CompanyInfo(); 
 	private LocalStorageHandler localstoragehandler; 
 	private Cursor dbCursor;
 	private int mResourceId;
@@ -224,8 +227,8 @@ public class Messaging extends ListActivity {
 		unregisterReceiver(messageReceiver);
 		unbindService(mConnection);
 		
-		FriendController.setActiveFriend(null);
-		
+	//	FriendController.setActiveFriend(null);
+		CompanyController.setActiveCompany(null);
 	}
 
 	@Override
@@ -239,8 +242,8 @@ public class Messaging extends ListActivity {
 		
 		registerReceiver(messageReceiver, i);
 		
-		FriendController.setActiveFriend(friend.userName);		
-		
+	//	FriendController.setActiveFriend(friend.userName);		
+		CompanyController.setActiveCompany(company.companyName);		
 		
 	}
 	

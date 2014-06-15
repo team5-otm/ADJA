@@ -117,6 +117,10 @@
             android:name="at.vcity.androidim.UserHomePage"
             android:label="@string/title_activity_user_home_page" >
         </activity>
+    <activity
+            android:name="at.vcity.androidim.tools.FilePickerActivity"
+            android:label="@string/title_activity_user_home_page" >
+        </activity>
     </application>
 
 </manifest>

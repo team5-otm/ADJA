@@ -1,12 +1,9 @@
 package at.vcity.androidim.types;
 
-import android.R;
-
-import com.microsoft.windowsazure.services.blob.client.BlobType;
 
 public class CompanyInfo{
 		
-		//public static final String FRIEND_LIST = "friendList";
+		public static final String COMPANY_LIST = "companyList";
 		public static final String COMPANY_NAME = "companyName";
 		public static final String COMPANY_EMAIL = "companyEmail";
 		public static final String COMPANY_ADDRESS = "companyAddress";

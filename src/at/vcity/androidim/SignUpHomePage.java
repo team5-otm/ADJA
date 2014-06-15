@@ -138,7 +138,7 @@ public class SignUpHomePage extends Activity {
 			}
 		});
 		
-		sign_up_user.setOnClickListener(new OnClickListener() {
+		sign_up_company.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
